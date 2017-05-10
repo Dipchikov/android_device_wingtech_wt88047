@@ -1,14 +1,11 @@
 # Camera
 PRODUCT_PACKAGES += \
     camera.msm8916 \
+    libboringssl-compat \
     libmm-qcamera \
     libshim_camera \
-    libboringssl-compat \
+    libstlport \
     Snap
-
-# Build libstlport for vendor blobs
-PRODUCT_PACKAGES += \
-    libstlport
 
 # Permissions
 PRODUCT_COPY_FILES += \
