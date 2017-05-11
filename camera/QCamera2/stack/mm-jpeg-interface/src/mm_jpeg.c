@@ -1879,6 +1879,7 @@ static int32_t mm_jpeg_check_resolution_change(mm_jpeg_obj *my_obj,
   int32_t prev_width,
   int32_t prev_height)
 {
+  int32_t rc = 0;
   if (my_obj->work_buf_cnt > work_bufs_need) {
     CDBG_ERROR("%s: %d] Unexpected work buffer count", __func__, __LINE__);
     return -1;
@@ -2522,6 +2523,11 @@ int32_t mm_jpeg_destroy_session_unlocked(mm_jpeg_obj *my_obj,
   }
 
   session_id = p_session->sessionId;
+  if ((GET_SESSION_IDX(session_id) >= MM_JPEG_MAX_SESSION)
+    ||(GET_CLIENT_IDX(session_id) >= MAX_JPEG_CLIENT_NUM)) {
+    CDBG_ERROR("%s:%d] Invalid Session or Client id", __func__, __LINE__);
+    return rc;
+  }
 
   /* abort job if in todo queue */
   CDBG("%s:%d] abort todo jobs", __func__, __LINE__);

@@ -52,7 +52,7 @@
 #define CEILING2(X)  (((X) + 0x0001) & 0xFFFE)
 
 #define MAX_ZOOMS_CNT 79
-#define MAX_SIZES_CNT 30
+#define MAX_SIZES_CNT 24
 #define MAX_EXP_BRACKETING_LENGTH 32
 #define MAX_ROI 5
 #define MAX_STREAM_NUM_IN_BUNDLE 4
@@ -851,6 +851,7 @@ typedef struct {
     cam_focus_distances_info_t focus_dist;       /* focus distance */
     int32_t focus_pos;
     uint32_t focused_frame_idx;
+    cam_focus_mode_type focus_mode;        /* focus mode from backend */
 } cam_auto_focus_data_t;
 
 typedef struct {
