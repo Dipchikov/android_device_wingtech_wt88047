@@ -26,12 +26,22 @@ LOCAL_SRC_FILES := \
 
 LOCAL_CFLAGS = -Wall -Wextra -Werror
 
+#use media extension
+#ifeq ($(TARGET_USES_MEDIA_EXTENSIONS), true)
+LOCAL_CFLAGS += -DUSE_MEDIA_EXTENSIONS
+#endif
+
 #Debug logs are enabled
 #LOCAL_CFLAGS += -DDISABLE_DEBUG_LOG
 
 #ifeq ($(TARGET_USE_VENDOR_CAMERA_EXT),true)
 #LOCAL_CFLAGS += -DUSE_VENDOR_CAMERA_EXT
 #endif
+
+ifeq ($(TARGET_USES_AOSP),true)
+LOCAL_CFLAGS += -DVANILLA_HAL
+endif
+
 ifneq ($(call is-platform-sdk-version-at-least,18),true)
 LOCAL_CFLAGS += -DUSE_JB_MR1
 endif
@@ -57,7 +67,7 @@ LOCAL_CFLAGS += -DUSE_KK_CODE
 endif
 
 #ifeq ($(TARGET_USE_VENDOR_CAMERA_EXT),true)
-#LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/msm8974/libgralloc
+#LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/libgralloc
 #else
 LOCAL_C_INCLUDES += $(call project-path-for,qcom-display)/libgralloc
 #endif
@@ -81,4 +91,6 @@ LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_SHARED_LIBRARY)
 
+ifeq ($(TARGET_USES_AOSP),false)
 include $(LOCAL_PATH)/test/Android.mk
+endif
